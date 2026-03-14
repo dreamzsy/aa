@@ -1,0 +1,373 @@
+<style>
+#dp-root*{box-sizing:border-box;margin:0;padding:0}
+#dp-root{
+  --bg:#050810;--s1:#0c1120;--s2:#111827;
+  --bd:rgba(99,179,237,0.12);
+  --ac:#63b3ed;--ac2:#f6ad55;--ac3:#68d391;
+  --tx:#e2e8f0;--mu:#64748b;
+  --win:#0078d4;--lnx:#f6a623;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--bg);color:var(--tx);
+  min-height:100vh;position:relative;overflow-x:hidden;
+  padding-bottom:80px;
+}
+#dp-root::before{
+  content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(99,179,237,0.03)1px,transparent 1px),linear-gradient(90deg,rgba(99,179,237,0.03)1px,transparent 1px);
+  background-size:40px 40px;pointer-events:none;z-index:0;
+}
+.dp-orb{position:fixed;border-radius:50%;filter:blur(80px);opacity:.15;pointer-events:none;z-index:0;}
+.dp-orb1{width:450px;height:450px;background:#3b82f6;top:-100px;left:-80px;animation:dp-drift 14s ease-in-out infinite alternate;}
+.dp-orb2{width:350px;height:350px;background:#8b5cf6;bottom:5%;right:-60px;animation:dp-drift 14s ease-in-out infinite alternate;animation-delay:-6s;}
+.dp-orb3{width:280px;height:280px;background:#06b6d4;top:40%;left:38%;animation:dp-drift 12s ease-in-out infinite alternate;animation-delay:-10s;}
+@keyframes dp-drift{from{transform:translate(0,0)}to{transform:translate(28px,18px)}}
+.dp-inner{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:0 32px;}
+.dp-hero{
+  text-align:center;padding:72px 32px 56px;
+  display:flex;flex-direction:column;align-items:center;
+}
+.dp-eyebrow{
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ac);opacity:.7;margin-bottom:22px;
+  display:flex;align-items:center;gap:10px;
+}
+.dp-eyebrow::before,.dp-eyebrow::after{content:'';display:block;width:28px;height:1px;background:var(--ac);opacity:.4;}
+.dp-h1{font-size:clamp(44px,7vw,88px);font-weight:800;line-height:.95;letter-spacing:-.03em;margin-bottom:24px;}
+.dp-h1 span:first-child{display:block;color:var(--tx);}
+.dp-h1 span:last-child{
+  display:block;
+  background:linear-gradient(90deg,#63b3ed,#a78bfa,#f6ad55);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.dp-desc{max-width:480px;font-size:15px;line-height:1.75;color:var(--mu);margin-bottom:40px;}
+.dp-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+.dp-btn-p{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--ac);color:#050810;
+  font-size:12px;font-weight:700;letter-spacing:.07em;
+  padding:12px 26px;border:none;cursor:pointer;text-decoration:none;
+  clip-path:polygon(7px 0%,100% 0%,calc(100% - 7px) 100%,0% 100%);
+  transition:all .2s;
+}
+.dp-btn-p:hover{background:#90cdf4;transform:translateY(-2px);box-shadow:0 0 28px rgba(99,179,237,.4);}
+.dp-btn-g{
+  display:inline-flex;align-items:center;gap:7px;
+  background:transparent;color:var(--tx);
+  font-size:12px;font-weight:700;letter-spacing:.07em;
+  padding:11px 26px;border:1px solid var(--bd);cursor:pointer;text-decoration:none;
+  transition:all .2s;
+}
+.dp-btn-g:hover{border-color:var(--ac);color:var(--ac);}
+.dp-stats{
+  display:flex;border:1px solid var(--bd);
+  background:rgba(12,17,32,.6);backdrop-filter:blur(10px);
+  margin-top:56px;width:100%;max-width:680px;
+}
+.dp-stat{flex:1;padding:18px 20px;border-right:1px solid var(--bd);text-align:center;}
+.dp-stat:last-child{border-right:none;}
+.dp-stat-n{font-size:24px;font-weight:700;color:var(--ac);display:block;}
+.dp-stat-l{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);margin-top:3px;}
+.dp-sh{display:flex;align-items:baseline;gap:14px;margin-bottom:32px;padding-top:64px;}
+.dp-stag{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ac);opacity:.6;padding:3px 8px;border:1px solid rgba(99,179,237,.2);}
+.dp-stit{font-size:26px;font-weight:800;letter-spacing:-.02em;}
+.dp-cc-wrap{background:var(--s1);border:1px solid var(--bd);overflow:hidden;}
+.dp-cch{display:flex;align-items:center;gap:16px;padding:36px 40px 0;}
+.dp-cci{
+  width:44px;height:44px;flex-shrink:0;
+  background:rgba(99,179,237,.1);border:1px solid rgba(99,179,237,.25);
+  display:flex;align-items:center;justify-content:center;
+}
+.dp-cct{font-size:26px;font-weight:800;letter-spacing:-.02em;}
+.dp-ccs{color:var(--mu);font-size:14px;line-height:1.65;padding:12px 40px 28px;max-width:620px;}
+.dp-os-tabs{display:flex;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);}
+.dp-os-tab{
+  padding:14px 28px;font-size:12px;font-weight:700;letter-spacing:.07em;
+  background:transparent;border:none;border-right:1px solid var(--bd);
+  color:var(--mu);cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;gap:8px;
+}
+.dp-os-tab:last-child{border-right:none;}
+.dp-os-tab:hover:not(.active){color:var(--tx);background:rgba(255,255,255,.03);}
+.dp-os-tab.active.win{background:rgba(0,120,212,.08);color:var(--win);border-bottom:2px solid var(--win);margin-bottom:-1px;}
+.dp-os-tab.active.mac{background:rgba(232,232,237,.05);color:#e8e8ed;border-bottom:2px solid rgba(232,232,237,.5);margin-bottom:-1px;}
+.dp-os-tab.active.lnx{background:rgba(246,166,35,.08);color:var(--lnx);border-bottom:2px solid var(--lnx);margin-bottom:-1px;}
+.dp-os-panel{display:none;padding:36px 40px;}
+.dp-os-panel.active{display:block;}
+.dp-step{margin-bottom:32px;}
+.dp-step:last-child{margin-bottom:0;}
+.dp-step-hd{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:700;margin-bottom:12px;}
+.dp-snum{
+  width:22px;height:22px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;
+}
+.win .dp-snum{background:rgba(0,120,212,.15);color:var(--win);border:1px solid rgba(0,120,212,.3);}
+.mac .dp-snum{background:rgba(232,232,237,.1);color:#e8e8ed;border:1px solid rgba(232,232,237,.25);}
+.lnx .dp-snum{background:rgba(246,166,35,.12);color:var(--lnx);border:1px solid rgba(246,166,35,.3);}
+.dp-note{
+  font-size:12px;color:var(--mu);line-height:1.65;
+  padding:10px 14px;background:rgba(255,255,255,.03);margin-bottom:12px;
+}
+.win .dp-note{border-left:2px solid rgba(0,120,212,.4);}
+.mac .dp-note{border-left:2px solid rgba(232,232,237,.25);}
+.lnx .dp-note{border-left:2px solid rgba(246,166,35,.4);}
+.dp-clbl{
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);
+  margin-bottom:8px;display:flex;align-items:center;gap:8px;
+}
+.dp-clbl::before{content:'';display:inline-block;width:6px;height:6px;background:var(--ac3);border-radius:50%;animation:dp-pulse 2s infinite;}
+@keyframes dp-pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.dp-code{
+  background:#020408;border:1px solid var(--bd);
+  padding:18px 22px;font-family:'Courier New',Courier,monospace;
+  font-size:12px;line-height:1.9;overflow-x:auto;
+}
+.dp-c-cm{color:var(--mu);}
+.dp-c-pr{color:var(--ac3);}
+.dp-c-ps{color:#e879f9;}
+.dp-c-st{color:var(--ac2);}
+.dp-c-kw{color:var(--ac);}
+.dp-fgrid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1px;background:var(--bd);border:1px solid var(--bd);
+}
+.dp-feat{background:var(--bg);padding:28px;transition:background .2s;}
+.dp-feat:hover{background:var(--s1);}
+.dp-fi{width:28px;height:28px;margin-bottom:14px;color:var(--ac);}
+.dp-ft{font-size:15px;font-weight:700;margin-bottom:7px;letter-spacing:-.01em;}
+.dp-fd{font-size:12px;color:var(--mu);line-height:1.65;}
+@media(max-width:700px){
+  .dp-stats{flex-direction:column;}
+  .dp-stat{border-right:none;border-bottom:1px solid var(--bd);}
+  .dp-cch,.dp-ccs,.dp-os-panel{padding-left:20px;padding-right:20px;}
+  .dp-os-tab{padding:12px 14px;font-size:11px;}
+  .dp-h1{font-size:40px;}
+}
+</style>
+
+<div id="dp-root">
+<div class="dp-orb dp-orb1"></div>
+<div class="dp-orb dp-orb2"></div>
+<div class="dp-orb dp-orb3"></div>
+
+<div class="dp-hero">
+  <div class="dp-eyebrow">大模型统一网关入口</div>
+  <h1 class="dp-h1">
+    <span>One Gateway</span>
+    <span>All Models</span>
+  </h1>
+  <p class="dp-desc">一个 API Key，接入全球主流大模型。OpenAI、Claude、Gemini、DeepSeek……统一格式，极低延迟，无需管理多个账户与密钥。</p>
+  <div class="dp-btns">
+    <a href="#dp-claude" class="dp-btn-p">⚡ 快速接入</a>
+    <a href="#dp-features" class="dp-btn-g">了解特性</a>
+  </div>
+  <div class="dp-stats">
+    <div class="dp-stat"><span class="dp-stat-n">50+</span><div class="dp-stat-l">支持模型</div></div>
+    <div class="dp-stat"><span class="dp-stat-n">99.9%</span><div class="dp-stat-l">服务可用率</div></div>
+    <div class="dp-stat"><span class="dp-stat-n">&lt;80ms</span><div class="dp-stat-l">首 Token 延迟</div></div>
+    <div class="dp-stat"><span class="dp-stat-n">OpenAI</span><div class="dp-stat-l">兼容格式</div></div>
+  </div>
+</div>
+
+<div class="dp-inner">
+
+  <div id="dp-claude">
+    <div class="dp-sh">
+      <span class="dp-stag">setup</span>
+      <h2 class="dp-stit">Claude Code 接入教程</h2>
+    </div>
+
+    <div class="dp-cc-wrap">
+      <div class="dp-cch">
+        <div class="dp-cci">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#63b3ed" stroke-width="1.8"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div class="dp-cct">Claude Code</div>
+      </div>
+      <p class="dp-ccs">选择你的操作系统，按步骤完成配置，即可通过 Deep API 网关使用 Claude Code。</p>
+
+      <div class="dp-os-tabs">
+        <button class="dp-os-tab win active" data-tab="windows" onclick="dpTab(this,'windows')">🪟 Windows</button>
+        <button class="dp-os-tab mac" data-tab="mac" onclick="dpTab(this,'mac')">🍎 macOS</button>
+        <button class="dp-os-tab lnx" data-tab="linux" onclick="dpTab(this,'linux')">🐧 Linux</button>
+      </div>
+
+      <div class="dp-os-panel win active" id="dp-tab-windows">
+        <div class="dp-step">
+          <div class="dp-step-hd win"><span class="dp-snum win">1</span>安装 WSL2（Windows 子系统）</div>
+          <div class="dp-note">Claude Code 在 Windows 上需要通过 WSL2 运行，请先以管理员身份打开 PowerShell。</div>
+          <div class="dp-clbl">PowerShell（管理员）</div>
+          <div class="dp-code">
+<span class="dp-c-ps">PS</span> wsl --install<br>
+<span class="dp-c-cm"># 安装完成后重启电脑，然后启动 Ubuntu</span>
+          </div>
+        </div>
+        <div class="dp-step">
+          <div class="dp-step-hd win"><span class="dp-snum win">2</span>在 WSL2 中安装 Node.js</div>
+          <div class="dp-clbl">WSL2 Ubuntu 终端</div>
+          <div class="dp-code">
+<span class="dp-c-pr">$</span> curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -<br>
+<span class="dp-c-pr">$</span> sudo apt-get install -y nodejs<br>
+<span class="dp-c-pr">$</span> node --version
+          </div>
+        </div>
+        <div class="dp-step">
+          <div class="dp-step-hd win"><span class="dp-snum win">3</span>安装 Claude Code CLI</div>
+          <div class="dp-clbl">WSL2 Ubuntu 终端</div>
+          <div class="dp-code">
+<span class="dp-c-pr">$</span> npm install -g @anthropic-ai/claude-code
+          </div>
+        </div>
+        <div class="dp-step">
+          <div class="dp-step-hd win"><span class="dp-snum win">4</span>配置 Deep API 网关</div>
+          <div class="dp-note">将以下配置写入 ~/.bashrc 或 ~/.zshrc，永久生效无需每次重设。</div>
+          <div class="dp-clbl">写入环境变量</div>
+          <div class="dp-code">
+<span class="dp-c-pr">$</span> echo <span class="dp-c-st">'export ANTHROPIC_BASE_URL="https://api.deepapi.com/v1"'</span> >> ~/.bashrc<br>
+<span class="dp-c-pr">$</span> echo <span class="dp-c-st">'export ANTHROPIC_API_KEY="sk-deep-xxxxxxxxxx"'</span> >> ~/.bashrc<br>
+<span class="dp-c-pr">$</span> source ~/.bashrc
+          </div>
+        </div>
+        <div class="dp-step">
+          <div class="dp-step-hd win"><span class="dp-snum win">5</span>启动 Claude Code</div>
+          <div class="dp-clbl">运行</div>
+          <div class="dp-code">
+<span class="dp-c-pr">$</span> claude<br>
+<span class="dp-c-cm"># 指定模型（可选）</span><br>
+<span class="dp-c-pr">$</span> claude --model <span class="dp-c-st">claude-sonnet-4-6</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dp-os-panel mac" id="dp-tab-mac">
+        <div class="dp-step">
+          <div class="dp-step-hd mac"><span class="dp-snum mac">1</span>安装 Node.js</div>
+          <div class="dp-note">推荐使用 Homebrew 安装 Node.js，如未安装 Homebrew 请先执行第一行命令。</div>
+          <div class="dp-clbl">终端 Terminal</div>
+          <div class="dp-code">
+<span class="dp-c-cm"># 安装 Homebrew（已有可跳过）</span><br>
+<span class="dp-c-pr">$</span> /bin/bash -c <span class="dp-c-st">"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</span><br><br>
+<span class="dp-c-cm"># 安装 Node.js</span><br>
+<span class="dp-c-pr">$</span> brew install node<br>
+<span class="dp-c-pr">$</span> node --version
+          </div>
+        </div>
+        <div class="dp-step">
+          <div class="dp-step-hd mac"><span class="dp-snum mac">2</span>安装 Claude Code CLI</div>
+          <div class="dp-clbl">终端 Terminal</div>
+          <div class="dp-code">
+<span class="dp-c-pr">$</span> npm install -g @anthropic-ai/claude-code
+          </div>
+        </div>
+        <div class="dp-step">
+          <div class="dp-step-hd mac"><span class="dp-snum mac">3</span>配置 Deep API 网关</div>
+          <div class="dp-note">将以下配置写入 ~/.zshrc（macOS 默认 Shell），永久生效。</div>
+          <div class="dp-clbl">写入环境变量</div>
+          <div class="dp-code">
+<span class="dp-c-pr">$</span> echo <span class="dp-c-st">'export ANTHROPIC_BASE_URL="https://api.deepapi.com/v1"'</span> >> ~/.zshrc<br>
+<span class="dp-c-pr">$</span> echo <span class="dp-c-st">'export ANTHROPIC_API_KEY="sk-deep-xxxxxxxxxx"'</span> >> ~/.zshrc<br>
+<span class="dp-c-pr">$</span> source ~/.zshrc
+          </div>
+        </div>
+        <div class="dp-step">
+          <div class="dp-step-hd mac"><span class="dp-snum mac">4</span>启动 Claude Code</div>
+          <div class="dp-clbl">运行</div>
+          <div class="dp-code">
+<span class="dp-c-pr">$</span> claude<br>
+<span class="dp-c-cm"># 指定模型（可选）</span><br>
+<span class="dp-c-pr">$</span> claude --model <span class="dp-c-st">claude-sonnet-4-6</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dp-os-panel lnx" id="dp-tab-linux">
+        <div class="dp-step">
+          <div class="dp-step-hd lnx"><span class="dp-snum lnx">1</span>安装 Node.js</div>
+          <div class="dp-note">以下命令适用于 Ubuntu / Debian。Arch Linux 用户请使用 pacman -S nodejs npm。</div>
+          <div class="dp-clbl">终端</div>
+          <div class="dp-code">
+<span class="dp-c-pr">$</span> curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -<br>
+<span class="dp-c-pr">$</span> sudo apt-get install -y nodejs<br>
+<span class="dp-c-pr">$</span> node --version
+          </div>
+        </div>
+        <div class="dp-step">
+          <div class="dp-step-hd lnx"><span class="dp-snum lnx">2</span>安装 Claude Code CLI</div>
+          <div class="dp-clbl">终端</div>
+          <div class="dp-code">
+<span class="dp-c-pr">$</span> npm install -g @anthropic-ai/claude-code
+          </div>
+        </div>
+        <div class="dp-step">
+          <div class="dp-step-hd lnx"><span class="dp-snum lnx">3</span>配置 Deep API 网关</div>
+          <div class="dp-note">写入 ~/.bashrc 或 ~/.zshrc 永久生效，也可写入 /etc/environment 全局生效。</div>
+          <div class="dp-clbl">写入环境变量</div>
+          <div class="dp-code">
+<span class="dp-c-pr">$</span> echo <span class="dp-c-st">'export ANTHROPIC_BASE_URL="https://api.deepapi.com/v1"'</span> >> ~/.bashrc<br>
+<span class="dp-c-pr">$</span> echo <span class="dp-c-st">'export ANTHROPIC_API_KEY="sk-deep-xxxxxxxxxx"'</span> >> ~/.bashrc<br>
+<span class="dp-c-pr">$</span> source ~/.bashrc
+          </div>
+        </div>
+        <div class="dp-step">
+          <div class="dp-step-hd lnx"><span class="dp-snum lnx">4</span>启动 Claude Code</div>
+          <div class="dp-clbl">运行</div>
+          <div class="dp-code">
+<span class="dp-c-pr">$</span> claude<br>
+<span class="dp-c-cm"># 指定模型（可选）</span><br>
+<span class="dp-c-pr">$</span> claude --model <span class="dp-c-st">claude-sonnet-4-6</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="dp-features">
+    <div class="dp-sh">
+      <span class="dp-stag">features</span>
+      <h2 class="dp-stit">为什么选择 Deep API</h2>
+    </div>
+    <div class="dp-fgrid">
+      <div class="dp-feat">
+        <svg class="dp-fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <div class="dp-ft">统一 OpenAI 格式</div>
+        <div class="dp-fd">完全兼容 OpenAI SDK，只需修改 base_url，零代码迁移成本。</div>
+      </div>
+      <div class="dp-feat">
+        <svg class="dp-fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <div class="dp-ft">企业级安全</div>
+        <div class="dp-fd">密钥托管、请求日志脱敏、IP 白名单、权限分级管控。</div>
+      </div>
+      <div class="dp-feat">
+        <svg class="dp-fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <div class="dp-ft">智能限速 &amp; 负载均衡</div>
+        <div class="dp-fd">多 key 轮询、自动重试、fallback 切换，永不因限速中断。</div>
+      </div>
+      <div class="dp-feat">
+        <svg class="dp-fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <div class="dp-ft">细粒度用量统计</div>
+        <div class="dp-fd">按模型、按项目追踪 token 消耗，实时成本可视化。</div>
+      </div>
+      <div class="dp-feat">
+        <svg class="dp-fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <div class="dp-ft">Streaming 全支持</div>
+        <div class="dp-fd">SSE 流式输出，完整支持 function calling、vision、JSON mode。</div>
+      </div>
+      <div class="dp-feat">
+        <svg class="dp-fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        <div class="dp-ft">全球加速节点</div>
+        <div class="dp-fd">亚太、欧美多节点就近接入，首 token 延迟降低 60%。</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+function dpTab(btn, os) {
+  document.querySelectorAll('.dp-os-tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.dp-os-panel').forEach(function(p){p.classList.remove('active');});
+  btn.classList.add('active');
+  document.getElementById('dp-tab-' + os).classList.add('active');
+}
+</script>
